@@ -7,7 +7,7 @@
         <div class="mlist">
             <div class="swiper-container" id="musicSwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide" v-for="item in musicls.musics" :key="item.id">
+                    <router-link :to="{ path:'/listview',query:{id:item.id}}" class="swiper-slide" v-for="item in musicls.musics" :key="item.id">
                         <img :src="item.picUrl" alt="">
                         <div class="name">{{ item.name }}</div>
                         <div class="count">
@@ -16,7 +16,7 @@
                             </svg>
                             <span>{{ changeValue(item.playCount) }}</span>
                         </div>
-                    </div>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -26,57 +26,58 @@
 <script>
 import "swiper/css/swiper.css"
 import Swiper from "swiper"
-import { onMounted,onUpdated,reactive } from "vue"
-import { getMusic } from "@/api/index.js"
+import { onMounted, onUpdated, reactive } from "vue"
+import { getMusic } from "@/api/index.js"  //@src目录
 export default {
-    name:'musiclist',
-    setup(){
-        const musicls = reactive({ musics:[] });
+    name: 'musiclist',
+    setup() {
+        const musicls = reactive({ musics: [] });
         function changeValue(num){
             var res = 0;
             if(num >= 100000000){
                 res = num/100000000;
-                res = res.toFixed(2) + "亿";
+                res = res.toFixed(2)+"亿";
             }else if(num >= 10000){
                 res = num/10000;
-                res = res.toFixed(2) + "万";
+                res = res.toFixed(2)+"万";
             }else{
                 res = num;
             }
             return res;
         }
-        onMounted(async() =>{
-            var result = await getMusic(10);
-            musicls.musics = result.data.result;
-            
-            })
-       
-        onUpdated(()=>{
-            var swiper = new Swiper("#musicSwiper",{
-                slidesPerView:4,
-                spaceBetween:10
-            })   
+        onMounted(async () => {  //view与model绑定成功之后
+            var res = await getMusic(10);
+            musicls.musics = res.data.result;
+            console.log(musicls.musics);
         })
-
-        return { musicls,changeValue }
+        onUpdated(() => {  //view或model数据更新之后
+            var swiper = new Swiper("#musicSwiper", {
+                slidesPerView: 3,  //一屏显示几个滑块
+                spaceBetween: 10  //每个滑块之间的间距
+            })
+        })
+        return { musicls,changeValue}
     }
 }
 </script>
 
 <style lang="less" scoped>
-.musicList{
+.musicList {
     width: 7.5rem;
     padding: 0 0.4rem;
-    .musicList-top{
+
+    .musicList-top {
         display: flex;
         justify-content: space-between;
         height: 1rem;
         align-items: center;
-        .title{
+
+        .title {
             font-size: 0.4rem;
             font-weight: 900;
         }
-        .more{
+
+        .more {
             border: 1px solid #ccc;
             border-radius: 0.2rem;
             font-size: 0.24rem;
@@ -86,41 +87,45 @@ export default {
             line-height: 0.5rem;
         }
     }
-    .mlist{
-        .swiper-container{
+
+    .mlist {
+        .swiper-container {
             width: 100%;
             height: 3rem;
-            .swiper-slide{
-                
+
+            .swiper-slide {
+
                 display: flex;
                 flex-direction: column;
                 position: relative;
-                img{
-                    width:100%;
+
+                img {
+                    width: 100%;
                     height: auto;
                     border-radius: 0.1rem;
                 }
-                .name{
+
+                .name {
                     height: 0.6rem;
                     width: 100%;
                     font-size: 0.24rem;
                     line-height: 0.4rem;
                 }
-                .count{
-                    position:absolute;
+
+                .count {
+                    position: absolute;
                     right: 0.1rem;
                     top: 0.1rem;
                     font-size: 0.24rem;
                     color: #ccc;
                     display: flex;
                     align-items: center;
-                    .icon{
-                         fill: #ccc;
+
+                    .icon {
+                        fill: #ccc;
                     }
                 }
             }
         }
-        
     }
-}
-</style>
+}</style>

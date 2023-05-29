@@ -4,12 +4,13 @@
             <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-liebiao"></use>
             </svg>
+
         </div>
         <div class="topCenter">
-            <span>我的</span>
-            <span>发现</span>
-            <span>云村</span>
-            <span>视频</span>
+            <span class="navBth">我的</span>
+            <span class="navBth active">发现</span>
+            <span class="navBth">云村</span>
+            <span class="navBth">视频</span>
         </div>
         <div class="topRight">
             <svg class="icon" aria-hidden="true">
@@ -18,12 +19,13 @@
         </div>
     </div>
 </template>
-
+    
 <script>
-export default {
-    name:'topnav'
-}
+    export default{
+        name:"topnav",
+    }
 </script>
+    
 <style lang="less" scoped>
 .topNav{
     width: 7.5rem;

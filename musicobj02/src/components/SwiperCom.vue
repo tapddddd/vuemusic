@@ -2,7 +2,9 @@
     <div id="swipercom">
         <div class="swiper-container" id="swiperIndex">
             <div class="swiper-wrapper">
-                 <div class="swiper-slide" v-for="(item,index) in imgs" :key="index"><img :src="item.pic" alt=""></div>
+                <div class="swiper-slide" v-for="(item,index) in imgs" :key="index">
+                    <img :src="item.pic" alt="">
+                </div>
             </div>
             <div class="swiper-pagination"></div>
         </div>
@@ -12,9 +14,9 @@
 <script>
 import "swiper/css/swiper.css"
 import Swiper from "swiper"
-import { getBanner } from "@/api/index.js"
+import {getBanner} from "@/api/index.js"
 export default {
-    name:'swipercom',
+    name: "swipercom",
     data(){
         return{
             imgs:[
@@ -25,6 +27,7 @@ export default {
                 {pic:require("../assets/logo.png")},
                 {pic:require("../assets/logo.png")},
                 {pic:require("../assets/logo.png")}
+                
             ]
         }
     },
@@ -32,13 +35,17 @@ export default {
         var res = await getBanner(1);
         this.imgs = res.data.banners;
         var myswiper = new Swiper("#swiperIndex",{
+            autoplay:true,
             // loop:true
+            // 分页器
             pagination:{
                 el:".swiper-pagination",
+                // 分页小圆点可以点击
                 clickable:true
             }
         })
     }
+
 }
 </script>
 
@@ -60,3 +67,4 @@ export default {
     }
     }
     </style>
+
