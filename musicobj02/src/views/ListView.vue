@@ -13,6 +13,7 @@
 	import { getMusicList} from "@/api/index.js" //@ src目录
 	import listviewTop from "@/components/ListViewTop.vue"
 	import playList from "@/components/PlayList.vue"
+	import store from "@/store/index.js"
 	export default{
 		name:"listview",
 		setup() {
@@ -31,6 +32,7 @@
 				var res = await getMusicList(id);//发送axios请求，获取歌单详情
 				music.playlist = res.data.playlist;//将获取的数据放到响应式数据中
 				console.log(music.playlist);
+				store.commit("setPlayList",music.playlist.tracks)
 			})
 
 			return {music}
