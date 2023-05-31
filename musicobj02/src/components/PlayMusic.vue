@@ -17,7 +17,7 @@
             </div>
         </div>
         <div v-if="isLyric" class="playLyric" @click="$event =>isLyric= !isLyric">
-            离离原上草，一岁一枯荣，野火烧不尽，春风吹又生
+            {{ lyric }}
         </div>
         <div v-else class="playContent" @click="$event =>isLyric= !isLyric">
             <!-- class有active小白条落下  class没有active小白条抬起 动态class，值为true才会添加class名称 -->
@@ -53,7 +53,7 @@ export default {
     name:"playmusic",
     props:["abc","play","playDetail"],
     computed:{
-        ...mapState(["playCurrentIndex","playlist"])  //当前播放音乐下标
+        ...mapState(["playCurrentIndex","playlist","lyric"])  //当前播放音乐下标 当前播放音乐列表
     },
     methods:{
         tabMusic(num){

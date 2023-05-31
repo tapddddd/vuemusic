@@ -14,4 +14,12 @@ export function getMusicList(id){
     return axios.get(`${baseUrl}/playlist/detail?id=${id}`);
 }
 
-export default { getBanner,getMusic,getMusicList };
+export function getLyric(id){
+	return axios.get(`${baseUrl}/lyric?id=${id}`);
+}
+
+export function searchMusic(keywords){
+	return axios.get(`${baseUrl}/search?keywords=${keywords}`);
+}
+
+export default { getBanner,getMusic,getMusicList,getLyric,searchMusic };
